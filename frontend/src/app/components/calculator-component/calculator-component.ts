@@ -46,7 +46,6 @@ export class CalculatorComponent implements OnInit {
           message: 'Date of birth cannot be in the future'
         };
       }
-
       return null;
     });
   });
@@ -67,7 +66,6 @@ export class CalculatorComponent implements OnInit {
 
   onCalculateSubmit(event: Event) {
     event.preventDefault();
-
     this.service.saveSession(this.sessionId, this.benefitModel())
       .pipe(
         switchMap(() => this.service.calculate(this.sessionId))
