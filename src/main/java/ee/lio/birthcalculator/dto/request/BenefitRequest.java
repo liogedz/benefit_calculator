@@ -1,4 +1,16 @@
 package ee.lio.birthcalculator.dto.request;
 
-public record BenefitRequest(String salary, String dob) {
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
+import java.time.LocalDate;
+
+public record BenefitRequest(
+        @NotNull
+        @Positive
+        Double salary,
+
+        @NotNull
+        LocalDate dob
+) {
 }

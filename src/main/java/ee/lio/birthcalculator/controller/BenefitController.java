@@ -2,21 +2,19 @@ package ee.lio.birthcalculator.controller;
 
 import ee.lio.birthcalculator.dto.request.BenefitRequest;
 import ee.lio.birthcalculator.dto.response.ApiResponse;
+import ee.lio.birthcalculator.dto.response.BenefitMonth;
+import ee.lio.birthcalculator.model.BenefitSession;
 import ee.lio.birthcalculator.service.CalculatorService;
 import ee.lio.birthcalculator.service.SessionService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/session")
 public class BenefitController {
 
     private final CalculatorService calculatorService;
@@ -28,18 +26,44 @@ public class BenefitController {
         this.sessionService = sessionService;
     }
 
-    @PostMapping(value = "/session")
+    @PostMapping
     public Map<String, String> createSession() {
-        String sessionId = sessionService.cre;
+        String sessionId = sessionService.createSession();
+        return Map.of("sessionId",
+                sessionId);
     }
 
-    @PostMapping(value = "/calculator")
-    public ResponseEntity<ApiResponse> calculate(@RequestBody BenefitRequest request) {
-        Double grossSalary = Double.parseDouble(request.salary());
-        LocalDate birthDate = LocalDate.parse(request.dob());
-        List<Map<String, Object>> data = calculatorService.calculate(grossSalary,
-                birthDate);
+    @PostMapping("/{sessionId}")
+    public ResponseEntity<?> saveSession(@PathVariable String sessionId,
+                                         @RequestBody BenefitRequest request) {
+        Double salary = request.salary();
+        LocalDate dob = request.dob();
+        sessionService.saveSessionData(sessionId,
+                salary,
+                dob);
+        return ResponseEntity.ok(Map.of("message",
+                "Saved"));
+    }
+
+    @GetMapping("/{sessionId}/calculator")
+    public ResponseEntity<ApiResponse> calculateSession(@PathVariable String sessionId) {
+        BenefitSession session = sessionService.getSession(sessionId)
+                .orElseThrow(() -> new RuntimeException("Session not found"));
+
+        List<BenefitMonth> data = calculatorService.calculate(
+                session.getGrossSalary(),
+                session.getBirthDate());
+
         return ResponseEntity.ok(new ApiResponse("Yearly breakdown calculated",
                 data));
+    }
+
+    @GetMapping("/session/{sessionId}")
+    public ResponseEntity<BenefitRequest> getSession(
+            @PathVariable String sessionId) {
+
+        return ResponseEntity.ok(
+                sessionService.getSessionData(sessionId)
+        );
     }
 }

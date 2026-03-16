@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface BenefitSessionRepository extends JpaRepository<BenefitSession, Long> {
     Optional<BenefitSession> findBySessionId(String sessionId);
+
 }

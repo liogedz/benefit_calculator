@@ -1,5 +1,7 @@
 package ee.lio.birthcalculator.service.impl;
 
+import ee.lio.birthcalculator.dto.request.BenefitRequest;
+import ee.lio.birthcalculator.exceptions.SessionNotFoundException;
 import ee.lio.birthcalculator.model.BenefitSession;
 import ee.lio.birthcalculator.repository.BenefitSessionRepository;
 import ee.lio.birthcalculator.service.SessionService;
@@ -18,6 +20,7 @@ public class SessionServiceImpl implements SessionService {
         this.repository = repository;
     }
 
+    @Override
     public String createSession() {
 
         BenefitSession session = new BenefitSession();
@@ -26,9 +29,10 @@ public class SessionServiceImpl implements SessionService {
         return session.getSessionId();
     }
 
-    public BenefitSession saveSessionData(String sessionId,
-                                          Double salary,
-                                          LocalDate dob) {
+    @Override
+    public void saveSessionData(String sessionId,
+                                Double salary,
+                                LocalDate dob) {
         BenefitSession session = repository.findBySessionId(sessionId)
                 .orElseGet(() -> {
                     BenefitSession s = new BenefitSession();
@@ -37,10 +41,23 @@ public class SessionServiceImpl implements SessionService {
                 });
         session.setGrossSalary(salary);
         session.setBirthDate(dob);
-        return repository.save(session);
+        repository.save(session);
     }
 
-    public Optional<BenefitSession> findBySessionId(String sessionId) {
+    @Override
+    public Optional<BenefitSession> getSession(String sessionId) {
         return repository.findBySessionId(sessionId);
+    }
+
+    @Override
+    public BenefitRequest getSessionData(String sessionId) {
+
+        BenefitSession session = repository.findBySessionId(sessionId)
+                .orElseThrow(() -> new SessionNotFoundException(sessionId));
+
+        return new BenefitRequest(
+                session.getGrossSalary(),
+                session.getBirthDate()
+        );
     }
 }
