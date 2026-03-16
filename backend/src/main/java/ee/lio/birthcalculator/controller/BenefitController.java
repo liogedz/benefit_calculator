@@ -3,6 +3,7 @@ package ee.lio.birthcalculator.controller;
 import ee.lio.birthcalculator.dto.request.BenefitRequest;
 import ee.lio.birthcalculator.dto.response.ApiResponse;
 import ee.lio.birthcalculator.dto.response.BenefitMonth;
+import ee.lio.birthcalculator.exceptions.SessionNotFoundException;
 import ee.lio.birthcalculator.model.BenefitSession;
 import ee.lio.birthcalculator.service.CalculatorService;
 import ee.lio.birthcalculator.service.SessionService;
@@ -48,7 +49,7 @@ public class BenefitController {
     @GetMapping("/{sessionId}/calculator")
     public ResponseEntity<ApiResponse> calculateSession(@PathVariable String sessionId) {
         BenefitSession session = sessionService.getSession(sessionId)
-                .orElseThrow(() -> new RuntimeException("Session not found"));
+                .orElseThrow(() -> new SessionNotFoundException(sessionId));
 
         List<BenefitMonth> data = calculatorService.calculate(
                 session.getGrossSalary(),

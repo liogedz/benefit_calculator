@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ee.lio</groupId>
-    <artifactId>BirthCalculator</artifactId>
+    <artifactId>BenefitCalculator</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>BirthCalculator</name>
-    <description>BirthCalculator</description>
+    <name>BenefitCalculator</name>
+    <description>BenefitCalculator</description>
     <url/>
     <licenses>
         <license/>

@@ -10,8 +10,6 @@ import java.time.format.TextStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-import static java.lang.Math.round;
-
 @Service
 public class CalculatorServiceImpl implements CalculatorService {
 
@@ -24,15 +22,12 @@ public class CalculatorServiceImpl implements CalculatorService {
         double effectiveSalary = Math.min(grossSalary,
                 SALARY_CAP);
         double dailyRate = effectiveSalary / 30.0;
-
         List<BenefitMonth> result = new ArrayList<>();
-
         YearMonth startMonth = YearMonth.from(birthDate);
 
         for (int i = 0; i < 12; i++) {
 
             YearMonth currentMonth = startMonth.plusMonths(i);
-
             LocalDate start = (i == 0)
                     ? birthDate
                     : currentMonth.atDay(1);
@@ -52,7 +47,6 @@ public class CalculatorServiceImpl implements CalculatorService {
                     payment
             ));
         }
-
         return result;
     }
 
