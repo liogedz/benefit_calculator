@@ -1,33 +1,56 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+# === Node / frontend ===
+frontend/node_modules/
+frontend/dist/
+frontend/out-tsc/
+frontend/.angular/
+frontend/tmp/
 
-### STS ###
+# === Backend / Java / Maven ===
+backend/target/
+*.h2.db
+*.mv.db
+*.trace.db
+*.lock.db
+!/src/main/resources/
+!/src/test/resources/
+.mvn/wrapper/maven-wrapper.jar
+
+# === IDEs / Editors ===
+.idea/
+.vscode/
+*.sublime-workspace
+*.launch
+*.classpath
+*.project
+.settings/
 .apt_generated
-.classpath
 .factorypath
-.project
-.settings
 .springBeans
 .sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
+.nb-gradle/
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
 *.iml
-*.ipr
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# === Logs ===
+npm-debug.log*
+yarn-error.log*
+*.log
 
-### VS Code ###
-.vscode/
+# === Coverage / temp files ===
+coverage/
+connect.lock
+.sass-cache/
+__screenshots__/
+libpeerconnection.log
+testem.log
+/tmp/
+
+# === OS files ===
+.DS_Store
+Thumbs.db
+
+# === Environment files ===
+.env
