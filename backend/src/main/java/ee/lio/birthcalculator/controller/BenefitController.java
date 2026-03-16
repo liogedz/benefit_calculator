@@ -59,7 +59,7 @@ public class BenefitController {
                 data));
     }
 
-    @GetMapping("/session/{sessionId}")
+    @GetMapping("/{sessionId}")
     public ResponseEntity<BenefitRequest> getSession(
             @PathVariable String sessionId) {
 
