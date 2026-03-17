@@ -4,11 +4,13 @@ import {BenefitMonth} from '@common/benefit-month';
 import {BenefitRequest} from '@common/benefit-request';
 import {form, FormField, min, required, validate} from '@angular/forms/signals';
 import {switchMap} from 'rxjs';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
   selector: 'app-calculator-component',
   imports: [
-    FormField
+    FormField,
+    CurrencyPipe
   ],
   templateUrl: './calculator-component.html',
   styleUrl: './calculator-component.css',

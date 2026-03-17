@@ -93,7 +93,7 @@
                   <td class="px-4 py-2">
                     {{ month.days }}
                   </td>
-                  <td class="px-4 py-2 font-semibold text-indigo-600">
+                  <td class="px-4 py-2 font-semibold text-green-700">
                     {{ month.payment }}
                   </td>
                 </tr>
@@ -101,7 +101,7 @@
             </tbody>
           </table>
           <div class="mt-4 text-right font-semibold text-lg">
-            Total: {{ totalPayment() }} €
+            Total: {{ totalPayment()|currency:'EUR':'symbol':'1.2-2' }}
           </div>
         </div>
       </div>
