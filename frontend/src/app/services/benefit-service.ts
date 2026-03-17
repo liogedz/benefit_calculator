@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {ENVIRONMENT} from '@common/environment';
 import {HttpClient} from '@angular/common/http';
 import {BenefitRequest} from '@common/benefit-request';
+import {ApiResponse} from '@common/api-response';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class BenefitService {
   }
 
   createSession() {
-    return this.http.post<{ sessionId: string }>(this.apiUrl, {});
+    return this.http.post<ApiResponse>(this.apiUrl, {});
   }
 
   saveSession(sessionId: string, data: BenefitRequest) {
@@ -21,10 +22,10 @@ export class BenefitService {
   }
 
   calculate(sessionId: string) {
-    return this.http.get<any>(`${this.apiUrl}/${sessionId}/calculator`);
+    return this.http.get<ApiResponse>(`${this.apiUrl}/${sessionId}/calculator`);
   }
 
   getSession(sessionId: string) {
-    return this.http.get(`${this.apiUrl}/${sessionId}`);
+    return this.http.get<ApiResponse>(`${this.apiUrl}/${sessionId}`);
   }
 }

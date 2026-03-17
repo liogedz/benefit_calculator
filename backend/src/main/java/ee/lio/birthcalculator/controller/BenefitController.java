@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/session")
@@ -28,22 +27,23 @@ public class BenefitController {
     }
 
     @PostMapping
-    public Map<String, String> createSession() {
+    public ResponseEntity<ApiResponse> createSession() {
         String sessionId = sessionService.createSession();
-        return Map.of("sessionId",
-                sessionId);
+        return ResponseEntity.ok(new ApiResponse("Session created",
+                sessionId));
     }
 
     @PostMapping("/{sessionId}")
-    public ResponseEntity<?> saveSession(@PathVariable String sessionId,
-                                         @RequestBody BenefitRequest request) {
+    public ResponseEntity<ApiResponse> saveSession(@PathVariable String sessionId,
+                                                   @RequestBody BenefitRequest request) {
         Double salary = request.salary();
         LocalDate dob = request.dob();
         sessionService.saveSessionData(sessionId,
                 salary,
                 dob);
-        return ResponseEntity.ok(Map.of("message",
-                "Saved"));
+        return ResponseEntity.ok(new ApiResponse("Session saved",
+                null
+        ));
     }
 
     @GetMapping("/{sessionId}/calculator")
@@ -60,11 +60,10 @@ public class BenefitController {
     }
 
     @GetMapping("/{sessionId}")
-    public ResponseEntity<BenefitRequest> getSession(
+    public ResponseEntity<ApiResponse> getSession(
             @PathVariable String sessionId) {
-
-        return ResponseEntity.ok(
+        return ResponseEntity.ok(new ApiResponse("Your session",
                 sessionService.getSessionData(sessionId)
-        );
+        ));
     }
 }

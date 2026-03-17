@@ -21,9 +21,17 @@ export class CalculatorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.createSession().subscribe(res => {
-      this.sessionId = res.sessionId;
-    });
+    const storedSession = localStorage.getItem('benefitSession');
+    if (storedSession) {
+      this.sessionId = storedSession;
+      this.service.getSession(this.sessionId)
+        .subscribe((res => this.benefitModel.set(res.data)));
+    } else {
+      this.service.createSession().subscribe(res => {
+        this.sessionId = res.data;
+        localStorage.setItem('benefitSession', this.sessionId);
+      });
+    }
   }
 
   benefitModel = signal<BenefitRequest>({
