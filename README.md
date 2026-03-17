@@ -4,6 +4,37 @@
 
 ## Parental Benefit Calculator
 
+## Features
+
+- ☕ Java / Spring Boot / Maven
+- 💾 H2 (In-Memory)
+- 🏗️ Layered Architecture
+- ⚡ Angular Signals
+
+## Workflow
+
+- User opens page
+- createSession()
+- store sessionId in localStorage
+
+Later visits:
+
+- User reloads page
+- sessionId found in localStorage
+- GET session data
+- restore form
+
+## Backend endpoints
+
+- POST /api/session
+- GET /api/session/{sessionId}
+- POST /api/session/{sessionId}
+- GET /api/session/{sessionId}/calculator
+
+## H2 database is set to clear data on restart
+
+- for keeping data set `ddl-auto:` to `update` [application.yaml](/backend/src/main/resources/application.yaml)
+
 ## Running the Application
 
 ### Using Maven
@@ -22,5 +53,4 @@ ng serve
 ### Using IDE
 
 Run the main application class directly from your IDE (IntelliJ IDEA, Eclipse, VS Code)
-
 The API will be available at: `http://localhost:8080`
