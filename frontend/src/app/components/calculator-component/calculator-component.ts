@@ -43,15 +43,27 @@ export class CalculatorComponent implements OnInit {
     min(fieldPath.salary, 100, {message: 'Minimum salary is 100 euro'});
     required(fieldPath.dob, {message: 'Date of Birth is required'});
     validate(fieldPath.dob, ({value}) => {
-
       const dob = value();
       if (!dob) return null;
       const selected = new Date(dob);
       const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      // future check
       if (selected > today) {
         return {
           kind: 'futureDate',
           message: 'Date of birth cannot be in the future'
+        };
+      }
+      // older than 3 years
+      const maxAgeDate = new Date();
+      maxAgeDate.setFullYear(maxAgeDate.getFullYear() - 3);
+
+      if (selected < maxAgeDate) {
+        return {
+          kind: 'tooOld',
+          message: 'Child must be younger than 3 years'
         };
       }
       return null;
