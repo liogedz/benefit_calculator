@@ -11,6 +11,12 @@
 - 🏗️ Layered Architecture
 - ⚡ Angular Signals
 
+## Validation
+
+- Minimum salary 100 €
+- No `Future born child`
+- No older than 3 years old child
+
 ## Workflow
 
 - User opens page
