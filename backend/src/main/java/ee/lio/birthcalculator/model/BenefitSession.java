@@ -9,6 +9,7 @@ public class BenefitSession {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false)
     private Long id;
 
     @Column(unique = true)

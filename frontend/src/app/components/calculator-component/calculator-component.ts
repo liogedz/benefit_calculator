@@ -40,6 +40,7 @@ export class CalculatorComponent implements OnInit {
     salary: 0,
     dob: ''
   });
+
   benefitForm = form(this.benefitModel, (fieldPath) => {
     required(fieldPath.salary, {message: 'Salary is required'});
     min(fieldPath.salary, 100, {message: 'Minimum salary is 100 euro'});
@@ -51,14 +52,13 @@ export class CalculatorComponent implements OnInit {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
-      // future check
       if (selected > today) {
         return {
           kind: 'futureDate',
           message: 'Date of birth cannot be in the future'
         };
       }
-      // older than 3 years
+
       const maxAgeDate = new Date();
       maxAgeDate.setFullYear(maxAgeDate.getFullYear() - 3);
 

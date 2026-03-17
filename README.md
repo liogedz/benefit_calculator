@@ -10,6 +10,7 @@
 - 💾 H2 (In-Memory)
 - 🏗️ Layered Architecture
 - ⚡ Angular Signals
+- 💨 Tailwind CSS
 
 ## Validation
 
