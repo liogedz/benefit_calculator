@@ -5,6 +5,7 @@ import ee.lio.birthcalculator.exceptions.SessionNotFoundException;
 import ee.lio.birthcalculator.model.BenefitSession;
 import ee.lio.birthcalculator.repository.BenefitSessionRepository;
 import ee.lio.birthcalculator.service.SessionService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,7 +21,9 @@ public class SessionServiceImpl implements SessionService {
         this.repository = repository;
     }
 
+
     @Override
+    @Transactional
     public String createSession() {
 
         BenefitSession session = new BenefitSession();
@@ -30,6 +33,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
+    @Transactional
     public void saveSessionData(String sessionId,
                                 Double salary,
                                 LocalDate dob) {
@@ -44,12 +48,15 @@ public class SessionServiceImpl implements SessionService {
         repository.save(session);
     }
 
+
     @Override
+    @Transactional(readOnly = true)
     public Optional<BenefitSession> getSession(String sessionId) {
         return repository.findBySessionId(sessionId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public BenefitRequest getSessionData(String sessionId) {
 
         BenefitSession session = repository.findBySessionId(sessionId)
