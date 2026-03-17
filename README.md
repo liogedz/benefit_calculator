@@ -40,7 +40,7 @@ Later visits:
 
 ## H2 database is set to clear data on restart
 
-- for keeping data set `ddl-auto:` to `update` [application.yaml](/backend/src/main/resources/application.yaml)
+- for keeping data set `ddl-auto:` to `update` [application.yaml](./backend/src/main/resources/application.yaml)
 
 ## Running the Application
 
@@ -61,8 +61,9 @@ ng serve
 
 Run the main application class directly from your IDE (IntelliJ IDEA, Eclipse, VS Code)
 The API will be available at: `http://localhost:8080`
+UI Angular at: [localhost](http://localhost:4200)
 
 ## Endpoints test
 
-- with postman - collection added in the [docs](/backend/docs/BenefitCalculation.postman_collection.json) folder
+- with postman - collection added in the [docs](./backend/docs/BenefitCalculation.postman_collection.json) folder
 - with IntelliJ - [requests](requests.http) in the root of the project

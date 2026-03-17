@@ -4,13 +4,14 @@ import {BenefitMonth} from '@common/benefit-month';
 import {BenefitRequest} from '@common/benefit-request';
 import {form, FormField, min, required, validate} from '@angular/forms/signals';
 import {switchMap} from 'rxjs';
-import {CurrencyPipe} from '@angular/common';
+import {CurrencyPipe, NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-calculator-component',
   imports: [
     FormField,
-    CurrencyPipe
+    CurrencyPipe,
+    NgClass
   ],
   templateUrl: './calculator-component.html',
   styleUrl: './calculator-component.css',
@@ -88,6 +89,12 @@ export class CalculatorComponent implements OnInit {
 
   onCalculateSubmit(event: Event) {
     event.preventDefault();
+
+    if (this.result().length) {
+      this.result.set([]);
+      return;
+    }
+
     this.service.saveSession(this.sessionId, this.benefitModel())
       .pipe(
         switchMap(() => this.service.calculate(this.sessionId))
@@ -95,7 +102,10 @@ export class CalculatorComponent implements OnInit {
       .subscribe(res => this.result.set(res.data));
   }
 
+  hasResult = computed(() => this.result().length > 0);
+
   totalPayment = computed(() =>
     this.result().reduce((sum, m) => sum + m.payment, 0)
   );
+
 }
