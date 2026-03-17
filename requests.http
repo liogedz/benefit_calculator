@@ -1,0 +1,24 @@
+@baseUrl = http://localhost:8080/api/session
+
+### Create Session
+POST {{baseUrl}}
+Content-Type: application/json
+
+> {%
+    client.global.set("sessionId", response.body.data);
+%}
+
+### Save Session
+POST {{baseUrl}}/{{sessionId}}
+Content-Type: application/json
+
+{
+  "salary": 12345,
+  "dob": "2025-02-19"
+}
+
+### Calculate Session
+GET {{baseUrl}}/{{sessionId}}/calculator
+
+### Get Session
+GET {{baseUrl}}/{{sessionId}}
