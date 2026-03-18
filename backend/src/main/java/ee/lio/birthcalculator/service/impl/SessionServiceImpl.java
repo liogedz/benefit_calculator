@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Optional;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -50,21 +50,29 @@ public class SessionServiceImpl implements SessionService {
 
 
     @Override
-    @Transactional(readOnly = true)
-    public Optional<BenefitSession> getSession(String sessionId) {
-        return repository.findBySessionId(sessionId);
+    @Transactional
+    public BenefitSession getSession(String sessionId) {
+        BenefitSession session = repository.findBySessionId(sessionId)
+                .orElseThrow(() -> new SessionNotFoundException(sessionId));
+        touch(session);
+        return session;
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public BenefitRequest getSessionData(String sessionId) {
 
         BenefitSession session = repository.findBySessionId(sessionId)
                 .orElseThrow(() -> new SessionNotFoundException(sessionId));
+        touch(session);
 
         return new BenefitRequest(
                 session.getGrossSalary(),
                 session.getBirthDate()
         );
+    }
+
+    private void touch(BenefitSession session) {
+        session.setLastAccessed(LocalDateTime.now());
     }
 }

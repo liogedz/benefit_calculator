@@ -4,7 +4,6 @@ import ee.lio.birthcalculator.dto.request.BenefitRequest;
 import ee.lio.birthcalculator.model.BenefitSession;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 public interface SessionService {
     String createSession();
@@ -13,7 +12,7 @@ public interface SessionService {
                          Double salary,
                          LocalDate dob);
 
-    Optional<BenefitSession> getSession(String sessionId);
+    BenefitSession getSession(String sessionId);
 
     BenefitRequest getSessionData(String sessionId);
 }

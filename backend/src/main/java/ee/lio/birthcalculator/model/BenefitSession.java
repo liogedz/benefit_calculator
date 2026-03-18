@@ -3,6 +3,7 @@ package ee.lio.birthcalculator.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class BenefitSession {
@@ -18,6 +19,19 @@ public class BenefitSession {
     private Double grossSalary;
 
     private LocalDate birthDate;
+
+    @Column(nullable = false)
+    private LocalDateTime lastAccessed;
+
+    @PrePersist
+    public void onCreate() {
+        this.lastAccessed = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void onUpdate() {
+        this.lastAccessed = LocalDateTime.now();
+    }
 
     public BenefitSession() {
     }
@@ -52,5 +66,9 @@ public class BenefitSession {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public void setLastAccessed(LocalDateTime lastAccessed) {
+        this.lastAccessed = lastAccessed;
     }
 }
