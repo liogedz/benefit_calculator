@@ -10,7 +10,7 @@
 - 💾 H2 (In-Memory)
 - 🏗️ Layered Architecture
 - ⚡ Angular Signals
-- 💨 Tailwind CSS
+- 💨 Tailwind CSS (auto dark and light mode)
 
 ## Validation
 
