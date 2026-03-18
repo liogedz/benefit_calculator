@@ -73,3 +73,10 @@ UI Angular at: [localhost](http://localhost:4200)
 
 - with postman - collection added in the [docs](./backend/docs/BenefitCalculation.postman_collection.json) folder
 - with IntelliJ - [requests](requests.http) in the root of the project
+
+## Vitest Angular
+
+```bash
+cd frontend
+ng test
+```
