@@ -80,3 +80,8 @@ UI Angular at: [localhost](http://localhost:4200)
 cd frontend
 ng test
 ```
+
+## Spring boot tests
+
+- controller tests
+- repository tests
