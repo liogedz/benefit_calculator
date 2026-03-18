@@ -1,125 +1,125 @@
 {
-	"info": {
-		"_postman_id": "1ddba2b2-fdc3-4faf-81c1-17081b3a8d93",
-		"name": "BenefitCalculation",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "40793695"
-	},
-	"item": [
-		{
-			"name": "session_id",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const json = pm.response.json();",
-							"",
-							"if (!json.data) {",
-							"    throw new Error(\"sessionId not found in response\");",
-							"}",
-							"",
-							"pm.collectionVariables.set(\"sessionId\", json.data);",
-							"",
-							"console.log(\"Session ID:\", json.data);"
-						],
-						"type": "text/javascript",
-						"packages": {},
-						"requests": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}",
-					"host": [
-						"{{base_url}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Save_session",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"salary\": 12345,\n  \"dob\": \"2025-02-19\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/{{sessionId}}",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"{{sessionId}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Calculate_session",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/{{sessionId}}/calculator",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"{{sessionId}}",
-						"calculator"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get_session",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript",
-						"packages": {},
-						"requests": {}
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/{{sessionId}}",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"{{sessionId}}"
-					]
-				}
-			},
-			"response": []
-		}
-	],
-	"variable": [
-		{
-			"key": "sessionId",
-			"value": ""
-		}
-	]
+  "info": {
+    "_postman_id": "1ddba2b2-fdc3-4faf-81c1-17081b3a8d93",
+    "name": "BenefitCalculation",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "40793695"
+  },
+  "item": [
+    {
+      "name": "Create_session",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "",
+              "if (!json.data) {",
+              "    throw new Error(\"sessionId not found in response\");",
+              "}",
+              "",
+              "pm.collectionVariables.set(\"sessionId\", json.data);",
+              "",
+              "console.log(\"Session ID:\", json.data);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}",
+          "host": [
+            "{{base_url}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Save_session",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"salary\": 12345,\n  \"dob\": \"2025-02-19\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/{{sessionId}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "{{sessionId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Calculate_session",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/{{sessionId}}/calculator",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "{{sessionId}}",
+            "calculator"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get_session",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/{{sessionId}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "{{sessionId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "sessionId",
+      "value": ""
+    }
+  ]
 }
