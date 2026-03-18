@@ -2,6 +2,7 @@ package ee.lio.birthcalculator.service.impl;
 
 import ee.lio.birthcalculator.dto.request.BenefitRequest;
 import ee.lio.birthcalculator.exceptions.SessionNotFoundException;
+import ee.lio.birthcalculator.exceptions.ValidationException;
 import ee.lio.birthcalculator.model.BenefitSession;
 import ee.lio.birthcalculator.repository.BenefitSessionRepository;
 import ee.lio.birthcalculator.service.SessionService;
@@ -37,6 +38,9 @@ public class SessionServiceImpl implements SessionService {
     public void saveSessionData(String sessionId,
                                 Double salary,
                                 LocalDate dob) {
+        validate(salary,
+                dob);
+
         BenefitSession session = repository.findBySessionId(sessionId)
                 .orElseGet(() -> {
                     BenefitSession s = new BenefitSession();
@@ -74,5 +78,21 @@ public class SessionServiceImpl implements SessionService {
 
     private void touch(BenefitSession session) {
         session.setLastAccessed(LocalDateTime.now());
+    }
+
+    private void validate(Double salary,
+                          LocalDate dob) {
+
+        if (salary == null || salary < 100) {
+            throw new ValidationException("Salary must be at least 100");
+        }
+
+        if (dob.isAfter(LocalDate.now())) {
+            throw new ValidationException("Date of birth cannot be in the future");
+        }
+
+        if (dob.isBefore(LocalDate.now().minusYears(3))) {
+            throw new ValidationException("Child is older than 3 years");
+        }
     }
 }
