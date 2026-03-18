@@ -42,6 +42,10 @@ Later visits:
 
 - for keeping data set `ddl-auto:` to `update` [application.yaml](./backend/src/main/resources/application.yaml)
 
+## Cron Job
+
+- DB entries got cleared if not accessed more than 7 days (if set to update - see previous)
+
 ## Running the Application
 
 ### Using Maven
@@ -60,7 +64,9 @@ ng serve
 ### Using IDE
 
 Run the main application class directly from your IDE (IntelliJ IDEA, Eclipse, VS Code)
+
 The API will be available at: `http://localhost:8080`
+
 UI Angular at: [localhost](http://localhost:4200)
 
 ## Endpoints test
