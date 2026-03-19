@@ -1,5 +1,6 @@
 package ee.lio.birthcalculator.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
@@ -11,6 +12,7 @@ public record BenefitRequest(
         Double salary,
 
         @NotNull
+        @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate dob
 ) {
 }

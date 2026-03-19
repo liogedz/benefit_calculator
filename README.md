@@ -4,51 +4,142 @@
 
 ## Parental Benefit Calculator
 
-## Features
+## 👥 Team
+
+Team Name: Init to Win it
+
+Aleksei Gedz (Full-stack / Project owner)
+Meribel Kuum
+Patrick Kekki
+
+## 🚀 Features
 
 - ☕ Java / Spring Boot / Maven
-- 💾 H2 (In-Memory)
-- 🏗️ Layered Architecture
-- ⚡ Angular Signals
-- 💨 Tailwind CSS (auto dark and light mode)
+- 💾 H2 (In-Memory Database)
+- 🏗️ Layered Architecture (Controller → Service → Repository)
+- ⚡ Angular (Signals-based state management)
+- 💨 Tailwind CSS (automatic dark/light mode)
+- 🔐 Session-based workflow (no authentication required)
 
-## Validation
+## ✅ Validation Rules
 
-- Minimum salary 100 €
-- No `Future born child`
-- No older than 3 years old child
+- Minimum salary: 100 €
+- Childbirth date:
+- Cannot be in the future
+- Cannot be older than 3 years
 
-## Workflow
+## 🔄 Workflow
 
-- User opens page
-- createSession()
-- store sessionId in localStorage
+First Visit
 
-Later visits:
+- User opens the application
+- createSession() is triggered
+- sessionId is stored in localStorage
 
-- User reloads page
-- sessionId found in localStorage
-- GET session data
-- restore form
+Subsequent Visits
 
-## Backend endpoints
+- Application checks for sessionId in localStorage
 
-- POST /api/session
-- GET /api/session/{sessionId}
-- POST /api/session/{sessionId}
-- GET /api/session/{sessionId}/calculator
+If found:
 
-## H2 database is set to clear data on restart
+- Fetch session via API
+- Restore form state automatically
 
-- for keeping data set `ddl-auto:` to `update` [application.yaml](./backend/src/main/resources/application.yaml)
+## 🔗 Backend Endpoints
 
-## Cron Job
+| Method | Endpoint                              | Description                |
+|--------|---------------------------------------|----------------------------|
+| POST   | `/api/session`                        | Create new session         |
+| GET    | `/api/session/{sessionId}`            | Retrieve session data      |
+| POST   | `/api/session/{sessionId}`            | Update session data        |
+| GET    | `/api/session/{sessionId}/calculator` | Calculate parental benefit |
 
-- DB entries got cleared if not accessed more than 7 days (if set to update - see previous)
+## ⚠️ Global Exception Handling
 
-## Running the Application
+The backend uses a centralized global exception handler to ensure consistent API responses.
 
-### Using Maven
+Covers:
+
+- Validation errors (@Valid, custom rules)
+- Entity not found (invalid sessionId)
+- Illegal arguments / bad requests
+- Generic server errors
+
+Benefits:
+
+- Clean controller code
+- Consistent error response format
+- Easier debugging and frontend integration
+
+## 🧪 Testing
+
+Backend (Spring Boot)
+
+✅ Controller Tests
+
+- Endpoint validation
+- Request/response correctness
+
+✅ Repository Tests
+
+- Database interactions (H2 in-memory)
+
+✅ Service Layer (if implemented)
+
+- Business logic validation
+
+Frontend (Angular)
+
+✅ Vitest Setup
+
+- Component tests
+- Service tests
+
+Run tests:
+
+```bash
+cd frontend
+ng test
+```
+
+```bash
+cd backend
+mvn test
+```
+
+or
+
+```bash
+mvn clean test
+```
+
+specific test
+
+```bash
+mvn -Dtest=<TestName> test
+```
+
+## 🗄️ Database
+
+- H2 in-memory database
+  -Data is reset on application restart
+
+To persist data:
+
+```yaml
+ddl-auto: update
+```
+
+- see [application.yaml](./backend/src/main/resources/application.yaml)
+
+## ⏱️ Scheduled Cleanup (Cron Job)
+
+- Sessions are automatically deleted if inactive for 7 days
+- Applies only when persistence is enabled `(ddl-auto: update)`
+
+## ▶️ Running the Application
+
+Using Maven
 
 ```bash
 cd backend
@@ -61,27 +152,24 @@ npm install
 ng serve
 ```
 
-### Using IDE
+## Using IDE
 
-Run the main application class directly from your IDE (IntelliJ IDEA, Eclipse, VS Code)
+Run the main Spring Boot application class directly (IntelliJ / Eclipse / VS Code)
 
-The API will be available at: `http://localhost:8080`
+## 🌐 Access
 
-UI Angular at: [localhost](http://localhost:4200)
+Backend API:
+http://localhost:8080
 
-## Endpoints test
+Frontend UI:
+http://localhost:4200
 
-- with postman - collection added in the [docs](./backend/docs/BenefitCalculation.postman_collection.json) folder
-- with IntelliJ - [requests](requests.http) in the root of the project
+## 🧰 API Testing
 
-## Vitest Angular
+📬 Postman collection:
 
-```bash
-cd frontend
-ng test
-```
+- pleas see [docs](./backend/docs/BenefitCalculation.postman_collection.json) folder
 
-## Spring boot tests
+⚡ IntelliJ HTTP client:
 
-- controller tests
-- repository tests
+- please see [requests](requests.http) in the root of the project
