@@ -6,7 +6,7 @@
 
 ## 👥 Team
 
-Team Name: Init to Win it
+**Team Name:** *Init to Win it*
 
 Aleksei Gedz (Full-stack / Project owner)
 Meribel Kuum
@@ -14,12 +14,12 @@ Patrick Kekki
 
 ## 🚀 Features
 
-- ☕ Java / Spring Boot / Maven
-- 💾 H2 (In-Memory Database)
-- 🏗️ Layered Architecture (Controller → Service → Repository)
-- ⚡ Angular (Signals-based state management)
-- 💨 Tailwind CSS (automatic dark/light mode)
-- 🔐 Session-based workflow (no authentication required)
+- Java / Spring Boot / Maven
+- H2 (In-Memory Database)
+- ️ Layered Architecture (Controller → Service → Repository)
+- Angular (Signals-based state management)
+- Tailwind CSS (automatic dark/light mode)
+- Session-based workflow (no authentication required)
 
 ## ✅ Validation Rules
 
@@ -75,22 +75,18 @@ Benefits:
 
 Backend (Spring Boot)
 
-✅ Controller Tests
+Controller Tests
 
 - Endpoint validation
 - Request/response correctness
 
-✅ Repository Tests
+Repository Tests
 
 - Database interactions (H2 in-memory)
 
-✅ Service Layer (if implemented)
-
-- Business logic validation
-
 Frontend (Angular)
 
-✅ Vitest Setup
+Vitest Setup
 
 - Component tests
 - Service tests
@@ -122,7 +118,7 @@ mvn -Dtest=<TestName> test
 ## 🗄️ Database
 
 - H2 in-memory database
-  -Data is reset on application restart
+- Data is reset on application restart
 
 To persist data:
 
@@ -166,10 +162,10 @@ http://localhost:4200
 
 ## 🧰 API Testing
 
-📬 Postman collection:
+Postman collection:
 
 - pleas see [docs](./backend/docs/BenefitCalculation.postman_collection.json) folder
 
-⚡ IntelliJ HTTP client:
+IntelliJ HTTP client:
 
 - please see [requests](requests.http) in the root of the project
