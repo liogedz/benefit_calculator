@@ -1,6 +1,8 @@
+server:
+  port: 8080 #use specific if necessary
 spring:
   application:
-    name: BirthCalculator
+    name: BenefitCalculator
   datasource:
     url: jdbc:h2:file:./backend/data/benefit-db;AUTO_SERVER=TRUE
     driver-class-name: org.h2.Driver
