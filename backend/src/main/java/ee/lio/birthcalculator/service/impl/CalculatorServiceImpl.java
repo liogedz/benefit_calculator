@@ -1,6 +1,7 @@
 package ee.lio.birthcalculator.service.impl;
 
 import ee.lio.birthcalculator.dto.response.BenefitMonth;
+import ee.lio.birthcalculator.dto.response.CalculationResult;
 import ee.lio.birthcalculator.service.CalculatorService;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +17,14 @@ public class CalculatorServiceImpl implements CalculatorService {
     private static final double SALARY_CAP = 4000.0;
 
     @Override
-    public List<BenefitMonth> calculate(Double grossSalary,
-                                        LocalDate birthDate) {
-
+    public CalculationResult calculate(Double grossSalary,
+                                       LocalDate birthDate) {
+        boolean isCapped = grossSalary > SALARY_CAP;
         double effectiveSalary = Math.min(grossSalary,
                 SALARY_CAP);
+
         double dailyRate = effectiveSalary / 30.0;
-        List<BenefitMonth> result = new ArrayList<>();
+        List<BenefitMonth> monthlyBenefit = new ArrayList<>();
         YearMonth startMonth = YearMonth.from(birthDate);
 
         for (int i = 0; i < 12; i++) {
@@ -39,7 +41,7 @@ public class CalculatorServiceImpl implements CalculatorService {
 
             double payment = round(dailyRate * days);
 
-            result.add(new BenefitMonth(
+            monthlyBenefit.add(new BenefitMonth(
                     formatMonth(currentMonth),
                     start,
                     end,
@@ -47,7 +49,10 @@ public class CalculatorServiceImpl implements CalculatorService {
                     payment
             ));
         }
-        return result;
+
+        return new CalculationResult(isCapped,
+                SALARY_CAP,
+                monthlyBenefit);
     }
 
     private double round(double value) {

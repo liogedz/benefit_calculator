@@ -15,7 +15,8 @@ import java.util.UUID;
 
 @Service
 public class SessionServiceImpl implements SessionService {
-
+    private static final int MIN_SALARY = 100;
+    private static final int MAX_AGE = 3;
     private final BenefitSessionRepository repository;
 
     public SessionServiceImpl(BenefitSessionRepository repository) {
@@ -83,7 +84,7 @@ public class SessionServiceImpl implements SessionService {
     private void validate(Double salary,
                           LocalDate dob) {
 
-        if (salary == null || salary < 100) {
+        if (salary == null || salary < MIN_SALARY) {
             throw new ValidationException("Salary must be at least 100");
         }
 
@@ -91,7 +92,7 @@ public class SessionServiceImpl implements SessionService {
             throw new ValidationException("Date of birth cannot be in the future");
         }
 
-        if (dob.isBefore(LocalDate.now().minusYears(3))) {
+        if (dob.isBefore(LocalDate.now().minusYears(MAX_AGE))) {
             throw new ValidationException("Child is older than 3 years");
         }
     }

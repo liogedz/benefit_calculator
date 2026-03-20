@@ -13,7 +13,7 @@ POST {{baseUrl}}/{{sessionId}}
 Content-Type: application/json
 
 {
-  "salary": 12345,
+  "salary": 20000,
   "dob": "2025-02-19"
 }
 

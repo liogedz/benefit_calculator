@@ -2,6 +2,7 @@ package ee.lio.birthcalculator.controller;
 
 import ee.lio.birthcalculator.dto.request.BenefitRequest;
 import ee.lio.birthcalculator.dto.response.BenefitMonth;
+import ee.lio.birthcalculator.dto.response.CalculationResult;
 import ee.lio.birthcalculator.model.BenefitSession;
 import ee.lio.birthcalculator.service.CalculatorService;
 import ee.lio.birthcalculator.service.SessionService;
@@ -88,46 +89,52 @@ class BenefitControllerTest {
 
     @Test
     void calculateSession_shouldReturnBreakdown() throws Exception {
+
         BenefitSession session = new BenefitSession();
         session.setGrossSalary(12345.0);
-        session.setBirthDate(LocalDate.of(1990,
-                1,
-                15));
+        session.setBirthDate(LocalDate.of(1990, 1, 15));
 
         List<BenefitMonth> months = List.of(
                 new BenefitMonth("January",
-                        LocalDate.of(2025,
-                                1,
-                                1),
-                        LocalDate.of(2025,
-                                1,
-                                31),
+                        LocalDate.of(2025, 1, 1),
+                        LocalDate.of(2025, 1, 31),
                         31,
                         1500.50),
                 new BenefitMonth("February",
-                        LocalDate.of(2025,
-                                2,
-                                1),
-                        LocalDate.of(2025,
-                                2,
-                                28),
+                        LocalDate.of(2025, 2, 1),
+                        LocalDate.of(2025, 2, 28),
                         28,
                         1350.75)
         );
 
-        when(sessionService.getSession("test-session-123")).thenReturn(session);
-        when(calculatorService.calculate(12345.0,
-                LocalDate.of(1990,
-                        1,
-                        15))).thenReturn(months);
+        CalculationResult result = new CalculationResult(
+                true,
+                4000.0,
+                months
+        );
+
+        when(sessionService.getSession("test-session-123"))
+                .thenReturn(session);
+
+        when(calculatorService.calculate(
+                12345.0,
+                LocalDate.of(1990, 1, 15)))
+                .thenReturn(result);
 
         mockMvc.perform(get("/api/session/test-session-123/calculator"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Yearly breakdown calculated"))
-                .andExpect(jsonPath("$.data").isArray())
-                .andExpect(jsonPath("$.data[0].month").value("January"))
-                .andExpect(jsonPath("$.data[0].days").value(31))
-                .andExpect(jsonPath("$.data[0].payment").value(1500.50))
-                .andExpect(jsonPath("$.data[1].month").value("February"));
+                .andExpect(jsonPath("$.message")
+                        .value("Yearly breakdown calculated"))
+
+                // 🔽 NEW STRUCTURE
+                .andExpect(jsonPath("$.data.capped").value(true))
+                .andExpect(jsonPath("$.data.capAmount").value(4000.0))
+
+                .andExpect(jsonPath("$.data.months").isArray())
+                .andExpect(jsonPath("$.data.months[0].month").value("January"))
+                .andExpect(jsonPath("$.data.months[0].days").value(31))
+                .andExpect(jsonPath("$.data.months[0].payment").value(1500.50))
+
+                .andExpect(jsonPath("$.data.months[1].month").value("February"));
     }
 }

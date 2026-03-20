@@ -19,6 +19,7 @@ import {CurrencyPipe, NgClass} from '@angular/common';
 export class CalculatorComponent implements OnInit {
   sessionId!: string;
   result = signal<BenefitMonth[]>([]);
+  isCapped = signal<boolean>(false);
 
   constructor(private service: BenefitService) {
   }
@@ -99,7 +100,10 @@ export class CalculatorComponent implements OnInit {
       .pipe(
         switchMap(() => this.service.calculate(this.sessionId))
       )
-      .subscribe(res => this.result.set(res.data));
+      .subscribe(res => {
+        this.result.set(res.data.months);
+        this.isCapped.set(res.data.capped);
+      });
   }
 
   hasResult = computed(() => this.result().length > 0);

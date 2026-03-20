@@ -9,14 +9,16 @@
 **Team Name:** *Init to Win it*
 
 Aleksei Gedz (Full-stack / Project owner)
+
 Meribel Kuum
+
 Patrick Kekki
 
 ## 🚀 Features
 
 - Java / Spring Boot / Maven
 - H2 (In-Memory Database)
-- ️ Layered Architecture (Controller → Service → Repository)
+- Layered Architecture (Controller → Service → Repository)
 - Angular (Signals-based state management)
 - Tailwind CSS (automatic dark/light mode)
 - Session-based workflow (no authentication required)
@@ -24,9 +26,11 @@ Patrick Kekki
 ## ✅ Validation Rules
 
 - Minimum salary: 100 €
-- Childbirth date:
+  Childbirth date:
 - Cannot be in the future
 - Cannot be older than 3 years
+- Maximum salary considered for calculation is capped at **4000 €**
+- UI notifies that capped value is used
 
 ## 🔄 Workflow
 
@@ -118,12 +122,11 @@ mvn -Dtest=<TestName> test
 ## 🗄️ Database
 
 - H2 in-memory database
-- Data is reset on application restart
 
-To persist data:
+To reset DB on application restart:
 
 ```yaml
-ddl-auto: update
+ddl-auto: create-drop
 ```
 
 - see [application.yaml](./backend/src/main/resources/application.yaml)
