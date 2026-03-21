@@ -31,6 +31,23 @@ describe('BenefitService', () => {
     expect(service).toBeTruthy();
   });
 
+  it('createSession should POST and return sessionId', () => {
+    const mockResponse = {
+      message: 'Session created',
+      data: 'test-session-123'
+    };
+
+    service.createSession().subscribe(res => {
+      expect(res.message).toBe('Session created');
+      expect(res.data).toBe('test-session-123');
+    });
+
+    const req = httpMock.expectOne(apiUrl);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual({});
+    req.flush(mockResponse);
+  });
+
   it('getSession should GET correct url', () => {
     const sessionId = 'test-session-123';
     const mockResponse = {
@@ -64,6 +81,33 @@ describe('BenefitService', () => {
     const req = httpMock.expectOne(`${apiUrl}/${sessionId}`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(payload);
+    req.flush(mockResponse);
+  });
+
+  it('calculate should GET calculator endpoint with correct data', () => {
+    const sessionId = 'test-session-123';
+    const mockResponse = {
+      message: 'Yearly breakdown calculated',
+      data: {
+        capped: false,
+        capAmount: 0,
+        months: [
+          {month: 'January', start: '2025-01-01', end: '2025-01-31', days: 31, payment: 1500.50},
+          {month: 'February', start: '2025-02-01', end: '2025-02-28', days: 28, payment: 1350.75}
+        ]
+      }
+    };
+
+    service.calculate(sessionId).subscribe(res => {
+      expect(res.message).toBe('Yearly breakdown calculated');
+      expect(res.data.capped).toBe(false);
+      expect(res.data.months).toHaveLength(2);
+      expect(res.data.months[0].month).toBe('January');
+      expect(res.data.months[0].payment).toBe(1500.50);
+    });
+
+    const req = httpMock.expectOne(`${apiUrl}/${sessionId}/calculator`);
+    expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
   });
 });

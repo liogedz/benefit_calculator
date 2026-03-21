@@ -23,7 +23,6 @@ public class SessionServiceImpl implements SessionService {
         this.repository = repository;
     }
 
-
     @Override
     @Transactional
     public String createSession() {

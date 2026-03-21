@@ -15,6 +15,7 @@ import java.util.*;
 public class CalculatorServiceImpl implements CalculatorService {
 
     private static final double SALARY_CAP = 4000.0;
+    private static final int PERIOD = 12;
 
     @Override
     public CalculationResult calculate(Double grossSalary,
@@ -27,7 +28,7 @@ public class CalculatorServiceImpl implements CalculatorService {
         List<BenefitMonth> monthlyBenefit = new ArrayList<>();
         YearMonth startMonth = YearMonth.from(birthDate);
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < PERIOD; i++) {
 
             YearMonth currentMonth = startMonth.plusMonths(i);
             LocalDate start = (i == 0)
