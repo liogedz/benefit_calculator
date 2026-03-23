@@ -16,10 +16,10 @@ Patrick Kekki
 
 ## 🚀 Features
 
-- Java / Spring Boot / Maven
+- Java 25.0.2 / Spring Boot / Maven
 - H2 (In-Memory Database)
 - Layered Architecture (Controller → Service → Repository)
-- Angular (Signals-based state management)
+- Angular 21.1.0 (Signals-based state management)
 - Tailwind CSS (automatic dark/light mode)
 - Session-based workflow (no authentication required)
 
@@ -58,7 +58,7 @@ If found:
 - Fetch session via API
 - dob and salary pre-populated in user entry
 - user may alter dob and salary
-- next steps as the `First Visit`
+- next steps as the `First Visit` last 4
 
 ## 🔗 Backend Endpoints
 
