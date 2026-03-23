@@ -25,29 +25,40 @@ Patrick Kekki
 
 ## ✅ Validation Rules
 
-- Minimum salary: 100 €
-  Childbirth date:
+Childbirth date:
+
 - Cannot be in the future
 - Cannot be older than 3 years
-- Maximum salary considered for calculation is capped at **4000 €**
+
+Parental salary:
+
+- Minimum considered not lower than **100 €**
+- Maximum salary for calculation is capped at **4000 €**
 - UI notifies that capped value is used
 
 ## 🔄 Workflow
 
-First Visit
+First Visit:
 
-- User opens the application
-- createSession() is triggered
-- sessionId is stored in localStorage
+- user opens the application
+- `CreateSession`is triggered
+- sessionId is stored in localStorage and DB
+- user enters dob and salary
+- user clicks `Calculate` triggers both:
+- values saved in DB under sessionId
+- payment breakdown is calculated and displayed
+- presence of results changes button to `Clear`
 
-Subsequent Visits
+Subsequent Visits:
 
-- Application checks for sessionId in localStorage
+- application checks for sessionId in localStorage
 
 If found:
 
 - Fetch session via API
-- Restore form state automatically
+- dob and salary pre-populated in user entry
+- user may alter dob and salary
+- next steps as the `First Visit`
 
 ## 🔗 Backend Endpoints
 
@@ -79,12 +90,12 @@ Benefits:
 
 Backend (Spring Boot)
 
-Controller Tests
+Controller Tests:
 
 - Endpoint validation
 - Request/response correctness
 
-Repository Tests
+Repository Tests:
 
 - Database interactions (H2 in-memory)
 
@@ -134,6 +145,8 @@ ddl-auto: create-drop
 ## ⏱️ Scheduled Cleanup (Cron Job)
 
 - Sessions are automatically deleted if inactive for 7 days
+- Job is scheduled for 03:00
+- Also checked every startup
 - Applies only when persistence is enabled `(ddl-auto: update)`
 
 ## ▶️ Running the Application

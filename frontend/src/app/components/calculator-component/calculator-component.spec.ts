@@ -11,7 +11,7 @@ describe('CalculatorComponent', () => {
   const apiUrl = ENVIRONMENT.apiUrl;
 
   beforeEach(async () => {
-    localStorage.clear(); // always start clean forces createSession branch
+    localStorage.clear();
 
     await TestBed.configureTestingModule({
       imports: [CalculatorComponent],
@@ -25,9 +25,8 @@ describe('CalculatorComponent', () => {
     component = fixture.componentInstance;
     httpMock = TestBed.inject(HttpTestingController);
 
-    fixture.detectChanges(); // triggers ngOnInit goes to else branch
+    fixture.detectChanges();
 
-    // createSession posts to apiUrl with no sessionId segment
     const req = httpMock.expectOne(apiUrl);
     expect(req.request.method).toBe('POST');
     req.flush({data: 'test-session-123'});
