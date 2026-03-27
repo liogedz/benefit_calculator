@@ -5,6 +5,8 @@ import ee.lio.birthcalculator.dto.response.CalculationResult;
 import ee.lio.birthcalculator.service.CalculatorService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
@@ -14,33 +16,35 @@ import java.util.*;
 @Service
 public class CalculatorServiceImpl implements CalculatorService {
 
-    private static final double SALARY_CAP = 4000.0;
+    private static final BigDecimal SALARY_CAP = new BigDecimal("4000.00");
+    private static final BigDecimal DAILY_DIVISOR = new BigDecimal("30");
     private static final int PERIOD = 12;
 
     @Override
-    public CalculationResult calculate(Double grossSalary,
+    public CalculationResult calculate(BigDecimal grossSalary,
                                        LocalDate birthDate) {
-        boolean isCapped = grossSalary > SALARY_CAP;
-        double effectiveSalary = Math.min(grossSalary,
-                SALARY_CAP);
+        boolean isCapped = grossSalary.compareTo(SALARY_CAP) > 0;
+        BigDecimal effectiveSalary = grossSalary.min(SALARY_CAP);
+        BigDecimal dailyRate = effectiveSalary.divide(DAILY_DIVISOR,
+                10,
+                RoundingMode.HALF_UP);
 
-        double dailyRate = effectiveSalary / 30.0;
         List<BenefitMonth> monthlyBenefit = new ArrayList<>();
         YearMonth startMonth = YearMonth.from(birthDate);
 
         for (int i = 0; i < PERIOD; i++) {
-
             YearMonth currentMonth = startMonth.plusMonths(i);
-            LocalDate start = (i == 0)
-                    ? birthDate
-                    : currentMonth.atDay(1);
-
+            LocalDate start = (i == 0) ? birthDate : currentMonth.atDay(1);
             LocalDate end = currentMonth.atEndOfMonth();
 
             int days = (int) ChronoUnit.DAYS.between(start,
                     end) + 1;
 
-            double payment = round(dailyRate * days);
+            BigDecimal payment = dailyRate
+                    .multiply(BigDecimal.valueOf(days))
+                    .min(SALARY_CAP)
+                    .setScale(2,
+                            RoundingMode.HALF_UP);
 
             monthlyBenefit.add(new BenefitMonth(
                     formatMonth(currentMonth),
@@ -54,10 +58,6 @@ public class CalculatorServiceImpl implements CalculatorService {
         return new CalculationResult(isCapped,
                 SALARY_CAP,
                 monthlyBenefit);
-    }
-
-    private double round(double value) {
-        return Math.round(value * 100.0) / 100.0;
     }
 
     private String formatMonth(YearMonth ym) {

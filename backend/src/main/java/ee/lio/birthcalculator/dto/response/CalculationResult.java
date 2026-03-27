@@ -1,10 +1,11 @@
 package ee.lio.birthcalculator.dto.response;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public record CalculationResult(
         boolean capped,
-        double capAmount,
+        BigDecimal capAmount,
         List<BenefitMonth> months
 ) {
 

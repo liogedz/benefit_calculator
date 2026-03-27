@@ -9,13 +9,14 @@ import ee.lio.birthcalculator.service.SessionService;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
 public class SessionServiceImpl implements SessionService {
-    private static final int MIN_SALARY = 100;
+    private static final BigDecimal MIN_SALARY = new BigDecimal("100.00");
     private static final int MAX_AGE = 3;
     private final BenefitSessionRepository repository;
 
@@ -36,7 +37,7 @@ public class SessionServiceImpl implements SessionService {
     @Override
     @Transactional
     public void saveSessionData(String sessionId,
-                                Double salary,
+                                BigDecimal salary,
                                 LocalDate dob) {
         validate(salary,
                 dob);
@@ -80,15 +81,11 @@ public class SessionServiceImpl implements SessionService {
         session.setLastAccessed(LocalDateTime.now());
     }
 
-    private void validate(Double salary,
+    private void validate(BigDecimal salary,
                           LocalDate dob) {
 
-        if (salary == null || salary < MIN_SALARY) {
+        if (salary == null || salary.compareTo(MIN_SALARY) < 0) {
             throw new ValidationException("Salary must be at least 100");
-        }
-
-        if (dob.isAfter(LocalDate.now())) {
-            throw new ValidationException("Date of birth cannot be in the future");
         }
 
         if (dob.isBefore(LocalDate.now().minusYears(MAX_AGE))) {

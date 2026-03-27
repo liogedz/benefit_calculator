@@ -9,6 +9,7 @@ import ee.lio.birthcalculator.service.SessionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @RestController
@@ -34,7 +35,7 @@ public class BenefitController {
     @PostMapping("/{sessionId}")
     public ResponseEntity<ApiResponse<Void>> saveSession(@PathVariable String sessionId,
                                                          @RequestBody BenefitRequest request) {
-        Double salary = request.salary();
+        BigDecimal salary = request.salary();
         LocalDate dob = request.dob();
         sessionService.saveSessionData(sessionId,
                 salary,

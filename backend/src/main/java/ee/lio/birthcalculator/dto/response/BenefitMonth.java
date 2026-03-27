@@ -1,5 +1,6 @@
 package ee.lio.birthcalculator.dto.response;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record BenefitMonth(
@@ -7,6 +8,6 @@ public record BenefitMonth(
         LocalDate start,
         LocalDate end,
         int days,
-        double payment
+        BigDecimal payment
 ) {
 }

@@ -2,6 +2,7 @@ package ee.lio.birthcalculator.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -16,7 +17,7 @@ public class BenefitSession {
     @Column(unique = true)
     private String sessionId;
 
-    private Double grossSalary;
+    private BigDecimal grossSalary;
 
     private LocalDate birthDate;
 
@@ -52,11 +53,11 @@ public class BenefitSession {
         this.sessionId = sessionId;
     }
 
-    public Double getGrossSalary() {
+    public BigDecimal getGrossSalary() {
         return grossSalary;
     }
 
-    public void setGrossSalary(Double grossSalary) {
+    public void setGrossSalary(BigDecimal grossSalary) {
         this.grossSalary = grossSalary;
     }
 
