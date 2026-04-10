@@ -29,7 +29,7 @@ class BenefitSessionRepositoryTest {
         session.setBirthDate(LocalDate.of(1990,
                 1,
                 15));
-        BenefitSession saved = repository.save(session);
+        repository.save(session);
     }
 
     @Test

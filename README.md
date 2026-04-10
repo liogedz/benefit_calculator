@@ -1,18 +1,8 @@
 # kood/JobFair 2026 Technical Challenge
 
-## Helmes Technical Challenge for koodJõhvi students
+## `Helmes` Technical Challenge for `Kood/Jõhvi` students
 
 ## Parental Benefit Calculator
-
-## 👥 Team
-
-**Team Name:** *Init to Win it*
-
-Aleksei Gedz (Full-stack / Project owner)
-
-Meribel Kuum
-
-Patrick Kekki
 
 ## 🚀 Features
 
