@@ -8,9 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class BirthCalculatorApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(BirthCalculatorApplication.class,
-                args);
+    void main() {
+        SpringApplication.run(BirthCalculatorApplication.class);
     }
-
 }

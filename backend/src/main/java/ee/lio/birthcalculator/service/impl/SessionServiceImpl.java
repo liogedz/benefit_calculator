@@ -36,11 +36,8 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     @Transactional
-    public void saveSessionData(String sessionId,
-                                BigDecimal salary,
-                                LocalDate dob) {
-        validate(salary,
-                dob);
+    public void saveSessionData(String sessionId, BigDecimal salary, LocalDate dob) {
+        validate(salary, dob);
 
         BenefitSession session = repository.findBySessionId(sessionId)
                 .orElseGet(() -> {
